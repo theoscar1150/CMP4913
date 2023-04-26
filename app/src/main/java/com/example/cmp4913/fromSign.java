@@ -1,11 +1,13 @@
 package com.example.cmp4913;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 import android.Manifest;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
@@ -14,6 +16,9 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.VideoView;
+
+import org.jetbrains.annotations.Nullable;
 
 public class fromSign extends AppCompatActivity {
 
@@ -35,16 +40,22 @@ public class fromSign extends AppCompatActivity {
                     ActivityCompat.requestPermissions(fromSign.this, new String[] { Manifest.permission.CAMERA }, CAMERA_PERMISSION_REQUEST_CODE);
                 } else {
                     // Camera permission is already granted
-                    openFrontCamera();
+                    Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                    startActivityForResult(intent,1);
                 }
             }
         });
     }
-    private void openFrontCamera() {
-        // Add code to open the front camera here
-        // For example:
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra("android.intent.extras.CAMERA_FACING", 1); // 1 for front camera
-        startActivity(intent);
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        VideoView videoView = new VideoView(this);
+        if(data.getData() != null) {
+            videoView.setVideoURI(data.getData());
+            videoView.start();
+            builder.setView(videoView).show();
+        }
     }
 }
