@@ -9,9 +9,13 @@ import android.os.Environment;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -21,16 +25,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
-//import com.google.android.material.bottomnavigation.BottomNavigationView;
-//import com.google.android.material.navigation.NavigationBarView;
-
 public class toSign extends AppCompatActivity {
 
     // Set up media recorder
     MediaRecorder mediaRecorder = new MediaRecorder();
     MediaPlayer mediaPlayer = new MediaPlayer();
     ImageButton btn_recordVoice;
-    private ImageButton mRecordButton;
+    EditText txt_input;
+    String sentence;
     protected static final int RESULT_SPEECH = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,6 +40,21 @@ public class toSign extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_sign);
         btn_recordVoice = (ImageButton) findViewById(R.id.btn_recordVoice);
+        txt_input = (EditText) findViewById(R.id.inputText);
+
+        txt_input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent)
+            {
+                if(i == EditorInfo.IME_ACTION_DONE)
+                {
+                    Toast.makeText(getApplicationContext(),txt_input.getText().toString(),Toast.LENGTH_LONG).show();
+                    sentence = txt_input.getText().toString(); //Stored sentece after the user inputs text
+                    txt_input.setText("");
+                }
+                return false;
+            }
+        });
 
         btn_recordVoice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +79,7 @@ public class toSign extends AppCompatActivity {
                 if(resultCode == RESULT_OK && data != null){
                     ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     Toast.makeText(getApplicationContext(),text.get(0),Toast.LENGTH_LONG).show();
+                    sentence = text.get(0); //Stored sentece after the user inputs voice
                 }
                 break;
         }

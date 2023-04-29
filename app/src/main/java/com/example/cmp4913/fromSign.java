@@ -23,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 public class fromSign extends AppCompatActivity {
 
     ImageButton btn_InputCamera;
+    Object video;
     private boolean isRecording = false;
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 100;
     private static final int MY_CAMERA_REQUEST_CODE = 100;
@@ -51,8 +52,8 @@ public class fromSign extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        VideoView videoView = new VideoView(this);
-        if(data.getData() != null) {
+        VideoView videoView = new VideoView(this); //videoBiew stores the video
+        if(data != null) {
             videoView.setVideoURI(data.getData());
             videoView.start();
             builder.setView(videoView).show();
