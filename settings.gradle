@@ -14,5 +14,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "CMP4913"
 include ':app'
-include ':java'
-include ':OpenCV'
