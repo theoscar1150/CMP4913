@@ -34,7 +34,7 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="ASL Translator"
                 android:textColor="@color/white"
-                android:textSize="40sp"
+                android:textSize="45sp"
                 android:typeface="sans" />
         </LinearLayout>
 
