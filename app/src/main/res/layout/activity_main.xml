@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:paddingVertical="150px"
+            android:paddingVertical="170px"
             >
 
             <TextView
@@ -44,29 +44,29 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical"
-            android:layout_marginTop="160dp">
+            android:layout_marginTop="100dp">
 
             <Button
                 android:id="@+id/btn_toSign"
                 style="@style/Widget.Material3.Button.ElevatedButton"
-                android:layout_width="295dp"
-                android:layout_height="64dp"
-                android:layout_margin="8dp"
+                android:layout_width="308dp"
+                android:layout_height="92dp"
+                android:layout_margin="10dp"
                 android:fontFamily="@font/montserrat_semibold"
                 android:onClick="toSignClickListener"
-                android:text="To ASL"
+                android:text="Translate To ASL"
                 android:textSize="24sp" />
 
             <Button
                 android:id="@+id/btn_fromSign"
                 style="@style/Widget.Material3.Button.ElevatedButton"
-                android:layout_width="295dp"
-                android:layout_height="64dp"
+                android:layout_width="308dp"
+                android:layout_height="92dp"
                 android:layout_margin="8dp"
                 android:fontFamily="@font/montserrat_semibold"
                 android:onClick="toSignClickListener"
-                android:text="From ASL"
-                android:textSize="24sp"/>
+                android:text="Translate From ASL"
+                android:textSize="24sp" />
         </LinearLayout>
 
     </LinearLayout>

@@ -16,7 +16,7 @@
         app:cardMaxElevation="18dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
-        android:layout_marginBottom="150dp">>
+        android:layout_marginBottom="150dp">
 
         <TextView
             android:id="@+id/textView"
@@ -25,7 +25,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/montserrat_semibold"
 
-            android:text="We will add 3D avatar here" />
+            android:text="3D avatar video here" />
     </androidx.cardview.widget.CardView>
 
     <EditText
