@@ -5,13 +5,10 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -28,9 +25,10 @@ import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class toSign extends AppCompatActivity {
 
@@ -95,8 +93,35 @@ public class toSign extends AppCompatActivity {
                             /*Parse Sentence START*/
                             Python py = Python.getInstance();
                             PyObject pyo = py.getModule("translateToASL").callAttr("translateToASL", sentence);
-                            String str = pyo.toString();
-                            Toast.makeText(getApplicationContext(), str, Toast.LENGTH_LONG).show();
+                            List<String> lst = pyo.asList().stream().map(PyObject::toString).collect(Collectors.toList());
+                            Toast.makeText(getApplicationContext(), lst.get(0), Toast.LENGTH_LONG).show();
+                            List<String> videoUris = new ArrayList<>();
+                            for(String ltr: lst)
+                            {
+                                String filename = ltr; // the base filename
+                                int resourceId = getResources().getIdentifier(filename, "raw", getPackageName());
+                                videoUris.add("android.resource://" + getPackageName() + "/" + resourceId);
+                            }
+                            final int numVideos = lst.size();
+                            final VideoView videoView = findViewById(R.id.videoView);
+                            videoView.setVideoURI(Uri.parse(videoUris.get(0)));
+                            videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                int currentVideoIndex = 0;
+
+                                @Override
+                                public void onCompletion(MediaPlayer mp) {
+                                    currentVideoIndex++;
+                                    if (currentVideoIndex < numVideos) {
+                                        videoView.setVideoURI(Uri.parse(videoUris.get(currentVideoIndex)));
+                                        videoView.start();
+                                    } else {
+                                        videoView.stopPlayback();
+                                    }
+                                }
+                            });
+
+                            // start playing the first video
+                            videoView.start();
                             /*Parse Sentence END*/
                         }
                     }
