@@ -18,14 +18,10 @@
         app:cardUseCompatPadding="true"
         android:layout_marginBottom="150dp">
 
-        <TextView
-            android:id="@+id/textView"
+        <VideoView
+            android:id="@+id/videoView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/montserrat_semibold"
-
-            android:text="3D avatar video here" />
+            android:layout_height="637dp" />
     </androidx.cardview.widget.CardView>
 
     <EditText

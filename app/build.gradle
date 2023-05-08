@@ -1,8 +1,12 @@
 plugins {
     id 'com.android.application'
+    id 'com.chaquo.python'
 }
 
 android {
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
+    }
     namespace 'com.example.cmp4913'
     compileSdk 33
 
@@ -12,8 +16,21 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+        python {
+            version "3.9"
+            pip {
+                install "spacy"
+            }
+        }
+    }
+    sourceSets {
+        main {
+            python.srcDir "C:/Users/theag/StudioProjects/CMP4913T/app/python"
+        }
     }
 
     buildTypes {
@@ -31,12 +48,20 @@ android {
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.firebase:firebase-database:20.0.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever:1.0.14'
     implementation 'org.pytorch:pytorch_android:1.10.0'
     implementation 'org.pytorch:pytorch_android_torchvision:1.10.0'
-    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.2'
+    implementation 'org.json:json:20210307'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.14'
+    implementation 'net.sourceforge.htmlunit:htmlunit:2.15'
 }
